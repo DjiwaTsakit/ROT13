@@ -7,11 +7,13 @@ function rot13() {
   echo "$output"
 }
 
-# Periksa apakah ada argumen yang diberikan
-if [ "$#" -eq 0 ]; then
-  echo "Usage: $0 <text>"
-  exit 1
-fi
+# Ambil input dari pengguna
+read -p "Enter text: " input
 
-# Panggil fungsi rot13 dengan teks yang diberikan sebagai argumen
-rot13 "$1"
+# Encode teks
+encoded=$(rot13 "$input")
+echo "Encoded: $encoded"
+
+# Decode teks
+decoded=$(rot13 "$encoded")
+echo "Decoded: $decoded"
