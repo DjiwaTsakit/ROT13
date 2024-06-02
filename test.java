@@ -7,7 +7,7 @@ public class Rot13 {
         for (char c : text.toCharArray()) {
             if (Character.isLetter(c)) {
                 char base = Character.isUpperCase(c) ? 'A' : 'a';
-                c = (char) (c - base + (c - base + 13) % 26);
+                c = (char) ((c - base + 13) % 26 + base);
             }
             result.append(c);
         }
@@ -25,22 +25,28 @@ public class Rot13 {
         while (true) {
             System.out.println("1. Encode");
             System.out.println("2. Decode");
+            System.out.println("3. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
             if (choice == 1) {
                 System.out.print("Enter text to encode: ");
-                String text = scanner.next();
+                String text = scanner.nextLine();
                 String encoded = encode(text);
                 System.out.println("Encoded: " + encoded);
             } else if (choice == 2) {
                 System.out.print("Enter text to decode: ");
-                String text = scanner.next();
+                String text = scanner.nextLine();
                 String decoded = decode(text);
                 System.out.println("Decoded: " + decoded);
+            } else if (choice == 3) {
+                break;
             } else {
                 System.out.println("Invalid choice");
             }
         }
+
+        scanner.close();
     }
 }
