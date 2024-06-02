@@ -1,53 +1,17 @@
 #!/bin/bash
 
-# Fungsi untuk mengencode teks menggunakan Rot13
-function encode_rot13() {
+# Fungsi untuk mengencode dan mendecode teks menggunakan Rot13
+function rot13() {
   local input=$1
-  local output=""
-  local char
-
-  for ((i=0; i<${#input}; i++)); do
-    char=${input:$i:1}
-    case $char in
-      [a-z]) new_char=$(echo "$char" | tr 'a-z' 'n-z')
-              ;;
-      [A-Z]) new_char=$(echo "$char" | tr 'A-Z' 'N-Z')
-              ;;
-      *) new_char=$char
-              ;;
-    esac
-    output+=$new_char
-  done
+  local output=$(echo "$input" | tr 'A-Za-z' 'N-ZA-Mn-za-m')
   echo "$output"
 }
 
-# Fungsi untuk mendecode teks menggunakan Rot13
-function decode_rot13() {
-  local input=$1
-  local output=""
-  local char
+# Periksa apakah ada argumen yang diberikan
+if [ "$#" -eq 0 ]; then
+  echo "Usage: $0 <text>"
+  exit 1
+fi
 
-  for ((i=0; i<${#input}; i++)); do
-    char=${input:$i:1}
-    case $char in
-      [n-z]) new_char=$(echo "$char" | tr 'n-z' 'a-z')
-              ;;
-      [N-Z]) new_char=$(echo "$char" | tr 'N-Z' 'A-Z')
-              ;;
-      *) new_char=$char
-              ;;
-    esac
-    output+=$new_char
-  done
-  echo "$output"
-}
-
-# Contoh penggunaan
-input="Hello, World!"
-echo "Input: $input"
-
-encoded=$(encode_rot13 "$input")
-echo "Encoded: $encoded"
-
-decoded=$(decode_rot13 "$encoded")
-echo "Decoded: $decoded"
+# Panggil fungsi rot13 dengan teks yang diberikan sebagai argumen
+rot13 "$1"
